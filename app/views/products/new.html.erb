@@ -1,0 +1,13 @@
+﻿<% content_for :title, "New product" %>
+<main class="catalog narrow">
+  <%= link_to "← All products", products_path, class: "back-link" %>
+  <section class="form-card">
+    <p class="eyebrow">CATALOG</p><h1>New product</h1><p class="muted">Add a product and its inventory details.</p>
+    <% if @product.errors.any? %><div class="flash flash-alert"><strong>Please fix these fields:</strong><ul><% @product.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div><% end %>
+    <%= form_with model: @product, class: "product-form" do |form| %>
+      <div class="field"><%= form.label :name %><%= form.text_field :name, placeholder: "e.g. Ceramic mug" %></div>
+      <div class="form-row"><div class="field"><%= form.label :price %><%= form.number_field :price, min: 0, step: "0.01", placeholder: "0.00" %></div><div class="field"><%= form.label :stock, "Stock quantity" %><%= form.number_field :stock, min: 0, step: 1, placeholder: "0" %></div></div>
+      <div class="card-actions"><%= form.submit "Create product", class: "button button-primary" %><%= link_to "Cancel", products_path, class: "button button-secondary" %></div>
+    <% end %>
+  </section>
+</main>

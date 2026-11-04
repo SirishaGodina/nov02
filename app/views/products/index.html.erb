@@ -1,0 +1,31 @@
+﻿<% content_for :title, "Products" %>
+<main class="catalog">
+  <header class="catalog-header">
+    <div><p class="eyebrow">CATALOG</p><h1>Products</h1><p class="muted">Browse and manage your inventory.</p></div>
+    <%= link_to "＋ New product", new_product_path, class: "button button-primary" %>
+  </header>
+
+  <% if notice.present? %><p class="flash flash-notice"><%= notice %></p><% end %>
+  <% if alert.present? %><p class="flash flash-alert"><%= alert %></p><% end %>
+
+  <% if @products.any? %>
+    <section class="product-grid" aria-label="Products">
+      <% @products.each do |product| %>
+        <article class="product-card">
+          <div class="product-mark" aria-hidden="true">▦</div>
+          <div class="product-info">
+            <h2><%= link_to product.name.presence || "Unnamed product", product_path(product) %></h2>
+            <p class="product-price"><%= number_to_currency(product.price || 0) %></p>
+            <p class="muted"><%= product.stock || 0 %> in stock</p>
+          </div>
+          <div class="card-actions">
+            <%= link_to "View", product_path(product), class: "button button-secondary" %>
+            <%= button_to "Delete", product_path(product), method: :delete, class: "button button-danger", form: { data: { turbo_confirm: "Delete this product?" } } %>
+          </div>
+        </article>
+      <% end %>
+    </section>
+  <% else %>
+    <section class="empty-state"><h2>No products yet</h2><p class="muted">Add a product to get your catalog started.</p><%= link_to "Create a product", new_product_path, class: "button button-primary" %></section>
+  <% end %>
+</main>

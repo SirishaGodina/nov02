@@ -1,0 +1,12 @@
+﻿<% content_for :title, @product.name.presence || "Product" %>
+<main class="catalog narrow">
+  <%= link_to "← All products", products_path, class: "back-link" %>
+  <% if notice.present? %><p class="flash flash-notice"><%= notice %></p><% end %>
+  <article class="detail-card">
+    <div class="product-mark product-mark-large" aria-hidden="true">▦</div>
+    <p class="eyebrow">PRODUCT DETAILS</p>
+    <h1><%= @product.name.presence || "Unnamed product" %></h1>
+    <div class="detail-grid"><div><span class="detail-label">Price</span><strong><%= number_to_currency(@product.price || 0) %></strong></div><div><span class="detail-label">In stock</span><strong><%= @product.stock || 0 %></strong></div></div>
+    <div class="card-actions"><%= link_to "Browse products", products_path, class: "button button-secondary" %><%= button_to "Delete product", product_path(@product), method: :delete, class: "button button-danger", form: { data: { turbo_confirm: "Delete this product?" } } %></div>
+  </article>
+</main>
